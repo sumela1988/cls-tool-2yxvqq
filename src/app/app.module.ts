@@ -20,14 +20,15 @@ import {Location, CommonModule} from '@angular/common';
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
+    CommonModule,
     ReactiveFormsModule,
-    RouterModule.forRoot([
+    RouterModule.forRoot([      
       { path: '', component: ProductListComponent },
       { path: 'products/:productId', component: ProductDetailsComponent },
       { path: 'cart', component: CartComponent },
-      { path: 'shipping', component: ShippingComponent },
     ])
-  ],
+    ],
   declarations: [
     AppComponent,
     TopBarComponent,

@@ -7,8 +7,8 @@ export const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'products'
   },
-  {
-    path: 'products',
-    loadChildren: './+products/products.module#ProductsModule'
-  }
+  //{
+    //path: 'products',
+    //loadChildren: './+products/products.module#ProductsModule'
+  //}
 ];
