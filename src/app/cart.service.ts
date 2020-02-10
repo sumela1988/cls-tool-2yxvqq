@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { products } from '../products';
 
 @Injectable({
    providedIn: 'root'
@@ -27,4 +28,11 @@ export class CartService {
   getShippingPrices() {
     return this.http.get('/assets/shipping.json');
   }
-}
+  getTotalAmount(){
+    return this.items.map( items: products [] => {
+      return items.reduce((prev, curr: products) => {
+        return prev + curr.price;
+      }, 0);
+    });
+  }
+
