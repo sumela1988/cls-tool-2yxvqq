@@ -1,17 +1,35 @@
 import { Component } from '@angular/core';
 
-import { products } from '../products';
+import { Product } from '../products';
+import {ProductsService} from '../products.service';
+import {CartService} from '../cart.service';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent {
-  products = products;
+export class ProductListComponent implements OnInit {
+  public items: Product[] = [];
 
-  share() {
-    window.alert('The product has been shared!');
+  constructor (private productsServices: ProductsService,
+  private cartService: CartService) {
+    productsServices.getProducts().subscribe(_=>this.items = _);
+
+    this.cartService.getItems().subscribe((items: Product[])=> {
+      //remove itesm that are in our cartService
+      const allItems = this.items;
+      this.items = allItems.filter(_ =>{
+        return !this.itemIsInCart(_, items);
+      })
+    })
+  }
+
+ ngOnInit() {
+  }
+
+  private itemIsInCart(item: Product, cart: Product[]): boolean {
+    return cart.find(_ => _.id === item.id) != null;
   }
 }
 
