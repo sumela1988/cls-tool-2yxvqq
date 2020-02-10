@@ -10,6 +10,7 @@ import { CartService } from '../cart.service';
 })
 export class CartComponent implements OnInit  {
   items;
+
   checkoutForm;
 
   constructor(
@@ -25,6 +26,8 @@ export class CartComponent implements OnInit  {
   ngOnInit() {
     this.items =  this.cartService.getItems();
   }
+
+
   onSubmit(customerData) {
     // Process checkout data here
     console.warn('Your order has been submitted', customerData);
