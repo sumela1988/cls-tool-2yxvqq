@@ -1,22 +1,24 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Product } from '../products';
-import {BehaviorSubject, Observable, Subject, Subscriber} from 'rxjs';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Product } from "../products";
+import { BehaviorSubject, Observable, Subject, Subscriber } from "rxjs";
+import { of } from "rxjs/observable/of";
 
 @Injectable()
 export class CartService {
-  private itemsInCartSubject: BehaviorSubject<Product[]> = new BehaviorSubject([]);
+  private itemsInCartSubject: BehaviorSubject<Product[]> = new BehaviorSubject(
+    []
+  );
   private itemsInCart: Product[] = [];
 
-  constructor(){ 
-    this.itemsInCartSubject.subscribe(_ => this.itemsInCart = _);
+  constructor() {
+    this.itemsInCartSubject.subscribe(_ => (this.itemsInCart = _));
   }
 
   public addToCart(item: Product) {
     this.itemsInCartSubject.next([...this.itemsInCart, item]);
   }
-  
+
   public removeFromCart(item: Product) {
     const currentItems = [...this.itemsInCart];
     const itemsWithoutRemoved = currentItems.filter(_ => _.id !== item.id);
@@ -35,4 +37,3 @@ export class CartService {
     });
   }
 }
-
