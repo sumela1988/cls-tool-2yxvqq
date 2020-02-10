@@ -29,7 +29,7 @@ export class CartService {
     return this.http.get('/assets/shipping.json');
   }
   getTotalAmount(){
-    return this.items.map( items: products [] => {
+    return this.items.map( (items: products []) => {
       return items.reduce((prev, curr: products) => {
         return prev + curr.price;
       }, 0);
