@@ -1,15 +1,13 @@
 <h3>My Cart</h3>
 
-<p>
-  <a routerLink="/shipping">Shipping Prices</a>
-</p>
+
 
 <div class="cart-item" *ngFor="let item of items">
   <span>{{ item.name }}</span>
   <span>{{ item.price | currency:'EUR':true  }}</span>
 </div>
 
-<p>You have {{item.length}} items in your bag</p>
+<p>You have {{items.length}} items in your bag</p>
 
 <p>Total: {{getTotal() | async}}</p>
 
@@ -30,3 +28,8 @@
 
   <button class="button" type="submit">Purchase</button>
 </form>
+
+
+<p>
+  <a routerLink="/shipping">Shipping Prices</a>
+</p>
