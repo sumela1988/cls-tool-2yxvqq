@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { CartService } from '../cart.service';
-import {Product} from '../product';
+import {Product} from '../products';
 import {Observable} from 'rxjs';
 import {of} from 'rxjs/observable/of';
 
