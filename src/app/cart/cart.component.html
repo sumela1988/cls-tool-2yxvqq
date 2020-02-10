@@ -9,6 +9,10 @@
   <span>{{ item.price | currency:'EUR':true  }}</span>
 </div>
 
+<p>You have {{shoppingCartItems.length}} items in your bag</p>
+
+<p>Total: {{getTotal() | async}}</p>
+
 <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
   <div>
     <label for="name">
