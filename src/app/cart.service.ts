@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Product } from "../products";
 import { BehaviorSubject, Observable, Subject, Subscriber } from "rxjs";
-import { of } from "rxjs/observable/of";
+
 
 @Injectable()
 export class CartService {
