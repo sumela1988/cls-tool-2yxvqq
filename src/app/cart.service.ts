@@ -1,36 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { products } from '../products';
+import { Product } from '../products';
+import {BehaviorSubject, Observable, Subject, Subscriber} from 'rxjs';
+import {of} from 'rxjs/observable/of';
 
-@Injectable({
-   providedIn: 'root'
-})
+@Injectable()
 export class CartService {
-  items = [];
+  private itemsInCartSubject: BehaviorSubject<Product[]> = new BehaviorSubject([]);
+  private itemsInCart: Product[] = [];
 
-  constructor(
-    private http: HttpClient
-  ){}
-
-
-  addToCart(product) {
-    this.items.push(product);
+  constructor(){ 
+    this.itemsInCartSubject.subscribe(_ => this.itemsInCart = _);
   }
 
-  getItems() {
-    return this.items;
+  public addToCart(item: Product) {
+    this.itemsInCartSubject.next([...this.itemsInCart, item]);
+  }
+  
+  public removeFromCart(item: Product) {
+    const currentItems = [...this.itemsInCart];
+    const itemsWithoutRemoved = currentItems.filter(_ => _.id !== item.id);
+    this.itemsInCartSubject.next(itemsWithoutRemoved);
   }
 
-  clearCart() {
-    this.items = [];
-    return this.items;
+  public getItems(): Observable<Product[]> {
+    return this.itemsInCartSubject.asObservable();
   }
-  getShippingPrices() {
-    return this.http.get('/assets/shipping.json');
-  }
-  getTotalAmount(){
-    return this.items.map( (items: products []) => {
-      return items.reduce((prev, curr: products) => {
+
+  public getTotalAmount(): Observable<number> {
+    return this.itemsInCartSubject.map((items: Product[]) => {
+      return items.reduce((prev, curr: Product) => {
         return prev + curr.price;
       }, 0);
     });
