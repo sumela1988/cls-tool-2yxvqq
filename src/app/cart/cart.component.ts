@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { CartService } from '../cart.service';
+import {Product} from '../product';
 import {Observable} from 'rxjs';
+import {of} from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-cart',
@@ -10,34 +12,27 @@ import {Observable} from 'rxjs';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit  {
-  items;
 
-  checkoutForm;
+  public shoppingCartItems$: Observable<Product[]> = of([]);
+  public shoppingCartItems: Product[] = [];
+
 
   constructor(
-    private cartService: CartService,
-    private formBuilder: FormBuilder,
-  ) { 
-    this.checkoutForm = this.formBuilder.group({
-      name: '',
-      address: ''
-    });
+    private cartService: CartService ) { 
+    this.shoppingCartItems$ = this.cartService.getItems();
+
+    this.shoppingCartItems$.subscribe(_ => this.shoppingCartItems = _);
   }
 
   ngOnInit() {
-    this.items =  this.cartService.getItems();
   }
+
   public getTotal(): Observable<number> {
     return this.cartService.getTotalAmount();
   }
 
-
-  onSubmit(customerData) {
-    // Process checkout data here
-    console.warn('Your order has been submitted', customerData);
-
-    this.items = this.cartService.clearCart();
-    this.checkoutForm.reset();
+  public removeItem(item: Product) {
+    this.cartService.removeFromCart(item)
   }
 
 }
