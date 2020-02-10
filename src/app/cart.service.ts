@@ -35,10 +35,5 @@ export class CartService {
       }, 0);
     });
   }
-  removeFromCart(items: products){
-    const currentItems = [...this.items];
-    const itemsWithoutRemoved = currentItems.filter(_ => _.id !==items.id);
-    this.items.next(itemsWithoutRemoved);
-  }
 }
 
