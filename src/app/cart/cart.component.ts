@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { CartService } from '../cart.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -25,6 +26,9 @@ export class CartComponent implements OnInit  {
 
   ngOnInit() {
     this.items =  this.cartService.getItems();
+  }
+  public getTotal(): Observable<number> {
+    return this.cartService.getTotalAmount();
   }
 
 
